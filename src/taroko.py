@@ -1,65 +1,172 @@
-#!/usr/bin/env Python
-#
-# Taroko Gorge
-# A one-page Python program to generate an unbounded poem
-#
-# Nick Montfort
-#  8 January 2009, Taroko Gorge National Park, Taiwan and Eva Air Flight 28
-#
-# x() splits a string into a list c() is just random. choice()
-# f() picks a fresh value from a list p() prints a line and pauses
-# cave() -- walking through the tunnels carved in the mountains
-# path() -- walking along outdoors, seeing what is above (a) and below (b)
-# site() -- stopping at a platform or viewing area
+#!/usr/bin/python
 
-import time,random,sys
-def x(s): return s.split(',')
-def c(l): return random.choice(l)
-a=x('brow,mist,shape,layer,the crag,stone,forest,height')
-b=x('flow,basin,shape,vein,rippling,stone,cove,rock')
+"""
+Nick Montfort
+Original Python program:
+8 January 2009, Taroko Gorge National Park, Taiwan and Eva Air Flight 28
 
-def f(v):
-    l=globals()[v]
-    i=c(l[:-1])
-    l.remove(i)
-    globals()[v]=l+[i]
-    return i
+Copyright (c) 2009-2017 Nick Montfort <nickm@nickm.com>
 
-def p(s=''):
-    print(s.capitalize())
-    sys.stdout.flush()
-    time.sleep(1.2)
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
 
-def cave():
-    j=['encompassing',c(x('rough,fine'))]+\
-    x('sinuous,straight,objective,arched,cool,clear,dim,dri ven')
-    t=c([1,2,3,4])
-    while len(j)>t:
-        j.remove(c(j))
-    v=' '+c(x('track,shade,translate,stamp,progress through,direct,run,enter'))
-    return v+' the '+' '.join(j)
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
+SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
+IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
 
-def path():
-    v=c(x('command,pace,roam,trail,frame,sweep,exercise,range'))
-    u=f('a')
-    if c([0,1]):
-        if u[0]=='f':
-            u=c([u,u,'monkey'])
-        h=u+'s '+v
+import random
+from time import sleep
+
+t = 0
+n = 0
+paths = 0
+
+above= [
+    'brow',
+    'mist',
+    'shape',
+    'layer',
+    'the crag',
+    'stone',
+    'forest',
+    'height'
+];
+
+below = [
+    'flow',
+    'basin',
+    'shape',
+    'vein',
+    'rippling',
+    'stone',
+    'cove',
+    'rock'
+];
+
+trans= [
+    'command',
+    'pace',
+    'roam',
+    'trail',
+    'frame',
+    'sweep',
+    'exercise',
+    'range'
+];
+
+imper = [
+    'track',
+    'shade',
+    'translate',
+    'stamp',
+    'progress through',
+    'direct',
+    'run',
+    'enter'
+];
+
+intrans = [
+    'linger',
+    'dwell',
+    'rest',
+    'relax',
+    'hold',
+    'dream',
+    'hum'
+];
+
+s = ['s', ''];
+
+texture = [
+    'rough',
+    'fine'
+];
+
+def rand_range(max: int = 0) -> int:
+    return int(random.random() * (max + 1))
+
+def choose(array: list = []) -> str:
+    return array[rand_range(len(array) - 1)];
+
+def path() -> str:
+    p = rand_range(1)
+    words = choose(above)
+    if words == 'forest' and rand_range(3) == 1:
+        words = f'monkeys {choose(trans)}'
     else:
-        h=u+' '+v+'s'
-    return h+' the '+f('b')+c(x(',s'))
+        words += f'{s[p]} {choose(trans)}{s[(p + 1) % 2]}'
+    words += f' the {choose(below)}{choose(s)}.'
+    return words
 
-def site():
-    return f(c(x('a,b')))+'s '+c(x('linger,dwell,rest,relax,hold,dream,hum'))
+def site() -> str:
+    words = ''
+    if rand_range(2) == 1:
+        words += choose(above)
+    else:
+        words += choose(below)
+    words += f's {choose(intrans)}.'
+    return words
 
-p()
-while True:
-    p(path()+'.')
-    m=c([0]*6+[1,2])
-    for n in range(0,m):
-        p(site()+'.')
-    p(path()+'.')
-    p()
-    p(cave()+' -- ')
-    p()
+def cave() -> str:
+    adjs=[
+        'encompassing',
+        choose(texture),
+        'sinuous',
+        'straight',
+        'objective',
+        'arched',
+        'cool',
+        'clear',
+        'dim',
+        'driven'
+    ]
+
+    target = 1 + rand_range(3)
+
+    while len(adjs) > target:
+        item = random.choice(adjs)
+        adjs.remove(item)
+
+    words = f"\u00a0\u00a0{choose(imper)} the {' '.join(adjs)}\u2014"
+
+    return words
+
+def do_line() -> None:
+    global t
+    global n
+    global paths
+
+    if n == 0:
+        text = ' '
+    elif n == 1:
+        paths = 2 + rand_range(2)
+        text = path()
+    elif n < paths:
+        text = site()
+    elif n == paths:
+        text = path()
+    elif n == paths + 1:
+        text = ' '
+    elif n == paths + 2:
+        text = cave()
+    else:
+        text = ' '
+        n = 0
+    n += 1
+
+    if text:
+        text = text.capitalize()
+        print(text)
+
+def poem() -> None:
+    while True:
+        do_line()
+        sleep(1)
+
+poem()
