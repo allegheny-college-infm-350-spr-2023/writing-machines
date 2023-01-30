@@ -1,3 +1,24 @@
+/*
+ * Nick Montfort
+ * Original Python program:
+ * 8 January 2009, Taroko Gorge National Park, Taiwan and Eva Air Flight 28
+ * This JavaScript version, with links:
+ * 22 November 2017
+ *
+ * Copyright (c) 2009-2017 Nick Montfort <nickm@nickm.com>
+ *
+ * Permission to use, copy, modify, and/or distribute this software for any
+ * purpose with or without fee is hereby granted, provided that the above
+ * copyright notice and this permission notice appear in all copies.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+ * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
+ * SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+ * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
+ * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ */
 
 var t=0;
 var n=0;
@@ -14,7 +35,7 @@ const above= [
     'height'
 ];
 
-const below= [
+const below = [
     'flow',
     'basin',
     'shape',
@@ -36,7 +57,7 @@ const trans= [
     'range'
 ];
 
-const imper=[
+const imper = [
     'track',
     'shade',
     'translate',
@@ -57,7 +78,7 @@ const intrans = [
     'hum'
 ];
 
-const s = ['s'];
+const s = ['s', ''];
 
 const texture = [
     'rough',
@@ -98,6 +119,7 @@ const site = () => {
 }
 
 const cave = () => {
+
     var adjs=[
         'encompassing',
         choose(texture),
@@ -110,31 +132,28 @@ const cave = () => {
         'dim',
         'driven'
     ];
-    
+
     var target= 1 + rand_range(3);
-    
+
     while (adjs.length > target) {
         adjs.splice(rand_range(adjs.length), 1);
     }
-    
+
     var words = '\u00a0\u00a0' + choose(imper) + ' the ' + adjs.join(' ') + ' \u2014';
-    
+
     return words;
 }
 
 function do_line() {
-    var main=document.getElementById('main');
     if (t <= 25) {
         t+=1;
-    } else {
-        main.removeChild(document.getElementById('main').firstChild);
     }
     if (n === 0) {
         text=' ';
     } else if (n == 1) {
         paths = 2 + rand_range(2);
         text = path();
-    } else if (n<paths) {
+    } else if (n < paths) {
         text = site();
     } else if (n == paths) {
         text = path();
@@ -154,3 +173,5 @@ function do_line() {
 function poem() {
     setInterval(do_line, 1200);
 }
+
+poem();
