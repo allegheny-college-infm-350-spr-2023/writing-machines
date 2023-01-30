@@ -1,3 +1,7 @@
+/*
+ *Original poem, Fortran - 1967 Alison Knowles
+ */
+
 const materials = [
     'shiny steel',
     'aluminum',
