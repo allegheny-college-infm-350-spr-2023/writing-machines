@@ -30,6 +30,9 @@
 
 * [nodeJS installation](https://nodejs.org/en/download/)
 
+I provide a link to the `nodeJS` installer, as we'll look at some aspects of Javascript together during lab, so notes taken
+on language formats will take place "live."
+
 ## Summary
 
 As the epigrapht to this assignment indicates, this week is _somewhat_ about "play." In the spirit of our previous exploration of prompts,
@@ -72,7 +75,7 @@ Several of the examples below do one or both.
 
 * [Takei, George; Mark Sample](https://www.samplereality.com/elit/takeigeorge.html)
   * Modification conceptualized around the actor playing Lieutenant Sulu on _Star Trek_
-* [Taroko, Gary; Leonardo Flores](https://academic.uprm.edu/flores/TarokoGary.html)
+* [Taroko Gary; Leonardo Flores](https://academic.uprm.edu/flores/TarokoGary.html)
   * A reframing of the text around the poet Gary Snider
 * [Tokyo Garage; Scott Rettberg](https://retts.net/tokyogarage.html)
   * A spirited rework of the original that converts it to a pirate/motorcycle gang narrative?
