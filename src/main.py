@@ -91,6 +91,7 @@ def site() -> str:
     else:
         words += choose(below)
     words += f's {choose(intrans)}.'
+    return words
 
 def cave() -> str:
     adjs=[
