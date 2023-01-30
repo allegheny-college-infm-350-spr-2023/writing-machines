@@ -145,9 +145,7 @@ const cave = () => {
 }
 
 function do_line() {
-    if (t <= 25) {
-        t+=1;
-    }
+
     if (n === 0) {
         text=' ';
     } else if (n == 1) {
